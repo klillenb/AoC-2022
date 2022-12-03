@@ -27,19 +27,33 @@ public class maxCalories {
     }
 
     private static void findSolution(List<String> list) {
-        int maxAmount = 0;
         int currentAmount = 0;
+        int firstPlace = 0;
+        int secondPlace = 0;
+        int thirdPlace = 0;
         for (String calorie : list) {
             if (!calorie.isEmpty()) {
                 currentAmount += Integer.parseInt(calorie);
             } else {
-                if (currentAmount > maxAmount) {
-                    maxAmount = currentAmount;
+                if (currentAmount > firstPlace) {
+                    int tempSecond = firstPlace;
+                    int tempThird = secondPlace;
+                    firstPlace = currentAmount;
+                    secondPlace = tempSecond;
+                    thirdPlace = tempThird;
+                } else if (currentAmount > secondPlace && currentAmount < firstPlace) {
+                    int tempThird = secondPlace;
+                    secondPlace = currentAmount;
+                    thirdPlace = tempThird;
+                } else if (currentAmount > thirdPlace && currentAmount < secondPlace) {
+                    thirdPlace = currentAmount;
                 }
                 currentAmount = 0;
             }
 
         }
-        System.out.println("Max amount: " + maxAmount);
+        System.out.println("Max amount: " + firstPlace);
+        System.out.println("First: " + firstPlace + "\nSecond: " + secondPlace + "\nThird: " + thirdPlace);
+        System.out.println("Top three total: " + (firstPlace + secondPlace + thirdPlace));
     }
 }
